@@ -59,17 +59,17 @@ function selectStation(id,name)
 {
 	debug(id);
 	
-	//if($('#stations-depart').html())
-	//{
-	//	$('#stations-arrive').html(name);
-	//}
-	//else
-	//{
+	if($('#stations-depart').html())
+	{
+		$('#stations-arrive').html(name);
+	}
+	else
+	{
 		$('#stations-depart').html(name);
 		$('#stations-search').val(null);
 		$('#stations-search').parent().removeClass('is-dirty');
 		updateStations();
-	//}
+	}
 }
 
 function updateStations()
@@ -96,7 +96,7 @@ function outputStations(response)
 {
 	$('#page-trips >section').html('');
 	
-	var output = '<div class="mdl-cell mdl-cell--12-col"><h5>Depart: <span id="stations-depart"></span></h5><h5>Arive: <span id="stations-arrive"></span></h5></div>';
+	var output = '<div class="mdl-cell mdl-cell--12-col"><h5>Depart: <span id="stations-depart"></span></h5><h5>Arrive: <span id="stations-arrive"></span></h5></div>';
 	
 	output += '<div class="mdl-cell mdl-cell--12-col">' +
 		'<!-- Textfield with Floating Label -->' +
