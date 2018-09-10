@@ -32,22 +32,27 @@ function launchApp(response)
 	$('#auth-signup-confirm').parent().removeClass('is-dirty');
 	
 	changePage('page-trips');
-	
-	$('#page-trips >section').html('');
-	
-	var output = '<div class="mdl-cell mdl-cell--12-col"><h3>My Trips</h3></div>' +
-		'<div class="mdl-cell mdl-cell--12-col">' +
-		'<!-- FAB button with ripple -->' +
-		'<button onclick="newTrip()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">' +
-			'<i class="material-icons">add</i>' +
-		'</button>' +
-		'</div>';
-	
-	$('#page-trips >section').html(output);
-	
+
+	myRoutes();
+
 	$('#auth').hide();
 	$('#app').show();
 	$('#title-name').html(response.user.name);
+}
+
+// To be used to display existing routes/ create new routes
+function myRoutes() {
+    $('#page-trips >section').html('');
+
+    var output = '<div class="mdl-cell mdl-cell--12-col"><h3>My Routes</h3></div>' +
+        '<div class="mdl-cell mdl-cell--12-col">' +
+        '<!-- FAB button with ripple -->' +
+        '<button onclick="newTrip()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">' +
+        '<i class="material-icons">add</i>' +
+        '</button>' +
+        '</div>';
+
+    $('#page-trips >section').html(output);
 }
 
 function newTrip()
@@ -55,23 +60,33 @@ function newTrip()
 	postRequest("stations/read", null, outputStations, debug);
 }
 
+// Assigns departing and arriving station for route creation
 function selectStation(id,name)
 {
 	debug(id);
-	
+	var departing;
+	var arriving;
 	if($('#stations-depart').html())
 	{
 		$('#stations-arrive').html(name);
+        $('#stations-arrive').val(id);
+		// Temp post request as to what i think might be needed, awaiting backend dev
+		// postRequest('routes/create', {"email":email, "departing": $('#stations-depart').html(), "arriving": $('#stations-arrive').html()}, myRoutes, authError);
+		//once actual postRequest remove below function
+		debug({"station-depart": $('#stations-depart').val(), "station-arrive": $('#stations-arrive').val()});
+		myRoutes();
 	}
 	else
 	{
 		$('#stations-depart').html(name);
+		$('#stations-depart').val(id);
 		$('#stations-search').val(null);
 		$('#stations-search').parent().removeClass('is-dirty');
 		updateStations();
 	}
 }
 
+// Updates the station list based on what is in the search bar
 function updateStations()
 {
 	var search = $('#stations-search').val().toLowerCase();
@@ -92,6 +107,7 @@ function updateStations()
 	}
 }
 
+// Displays the stations that allow route creation
 function outputStations(response)
 {
 	$('#page-trips >section').html('');
