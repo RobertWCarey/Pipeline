@@ -3,6 +3,7 @@ var API_MOVENSW = "https://api.movensw.com/";
 var TOKEN;
 var PAGE = "page-trips";
 
+
 function debug(output)
 {
 	if(DEBUG)
