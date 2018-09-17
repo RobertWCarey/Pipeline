@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/RobertWCarey/Pipeline#readme",
   "dependencies": {
+    "chromedriver": "^2.41.0",
     "selenium-webdriver": "^4.0.0-alpha.1"
   }
 }
